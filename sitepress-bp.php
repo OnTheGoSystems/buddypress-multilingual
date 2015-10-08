@@ -41,10 +41,12 @@ function bpml_init() {
             // Always on frontend
             if ( !is_admin() || $apply_filters ) {
                 include_once dirname( __FILE__ ) . '/includes/class.filters.php';
-                // Rewrite rules
-                add_action( 'init', 'bpml_use_verbose_rules' );
-                add_filter( 'page_rewrite_rules', 'bpml_page_rewrite_rules_filter' );
-                add_filter( 'rewrite_rules_array', 'bpml_rewrite_rules_array_filter' );
+                // Verbose page rewrite rules
+                if ( !defined( 'BPML_USE_VERBOSE_PAGE_RULES' ) || BPML_USE_VERBOSE_PAGE_RULES ) {
+                    add_action( 'init', 'bpml_use_verbose_rules' );
+                    add_filter( 'page_rewrite_rules', 'bpml_page_rewrite_rules_filter' );
+                    add_filter( 'rewrite_rules_array', 'bpml_rewrite_rules_array_filter' );
+                }
             }
 
             // XProfile
