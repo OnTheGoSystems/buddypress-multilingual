@@ -32,7 +32,6 @@ class BPML_XProfile
         add_filter( 'bp_get_the_profile_field_options_select', array($this, 't_select_option'), 0, 5 );
         add_filter( 'bp_get_the_profile_field_value', array($this, 't_value_profile_view'), 9, 2 );
         add_filter( 'bp_get_the_profile_group_name', array($this, 't_group_name') );
-        add_filter( 'xprofile_filter_profile_group_tabs', array($this, 't_group_edit_tabs'), 10, 3 );
     }
 
     public function bp_init() {
@@ -283,19 +282,17 @@ class BPML_XProfile
     }
 
     public function t_group_name( $group_name ) {
-        global $group;
-        return icl_t( $this->_context,
-                "{$this->_group_string_prefix}{$group->id} name", $group->name );
-    }
-
-    public function t_group_edit_tabs( $tabs, $groups, $group_name ) {
-        foreach ( $groups as $k => $group ) {
-            $group_name = icl_t( $this->_context,
-                "{$this->_group_string_prefix}{$group->id} name", $group->name );
-            $tabs[$k] = preg_replace("/(<([\w]+)[^>]*>){$group->name}(<\/\\2>)/",
-                                "$1{$group_name}$3", $tabs[$k], -1);
+        $cache_key = 'bpml_xprofile_group_id_by_name_' . md5( $group_name );
+        $group_id = wp_cache_get( $cache_key );
+        if ( false === $group_id ) {
+            global $wpdb, $bp;
+            $sql = $wpdb->prepare( "SELECT id FROM {$bp->profile->table_name_groups} WHERE name=%s", $group_name );
+            $group_id = $wpdb->get_var( $sql );
+            wp_cache_set( $cache_key, $group_id );
         }
-        return $tabs;
+        
+        return $group_id ? icl_t( $this->_context,
+                "{$this->_group_string_prefix}{$group_id} name", $group_name ) : $group_name;
     }
 
     public function sanitize_option_basename( $option, $field_id ) {
