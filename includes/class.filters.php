@@ -48,7 +48,8 @@ class BPML_Filters
         if ( bpml_is_language_per_domain() ) {
             return $url;
         }
-        return preg_replace('/(\/|^)' . ICL_LANGUAGE_CODE . '\//', '$1', $url, 1);
+        $language = apply_filters( 'wpml_current_language', null );
+        return preg_replace('/(\/|^)' . $language . '\//', '$1', $url, 1);
     }
 
     /**
