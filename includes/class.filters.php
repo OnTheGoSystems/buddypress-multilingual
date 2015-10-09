@@ -145,9 +145,8 @@ class BPML_Filters
     }
 
     public function core_ajax_url_filter( $url ){
-        global $sitepress;
         $url = add_query_arg( array(
-            'lang' => $sitepress->get_current_language(),
+            'lang' => apply_filters( 'wpml_current_language', null ),
             'bpml_filter' => 'true',
             ), $url );
         return $url;
