@@ -4,7 +4,7 @@ Donate link: http://wpml.org/documentation/related-projects/buddypress-multiling
 Tags: i18n, translation, localization, language, multilingual, WPML, BuddyPress
 Requires at least: 3.0
 Tested up to: 4.2.2
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 
 BuddyPress Multilingual allows BuddyPress sites to run fully multilingual using the WPML plugin.
 
@@ -57,8 +57,11 @@ Support for language as parameter will not be added soon as we're looking for so
 
 == Changelog ==
 
-= 1.5.2-dev =
+= 1.5.2 =
 * Fixed strict standards warning for PHP 5.6
+* Fixed regex for stripping language from bp_uri
+* Fixed field tabs on profile screen
+* Added ability to switch off verbose rules 
 
 = 1.5.1 =
 * Improved WPML API usage
