@@ -189,7 +189,7 @@ class BPML_XProfile
      */
     public function t_radio( $html, $option, $field_id, $selected, $k ) {
         $label = $this->_t_option_name( $option, $field_id );
-        return preg_replace( '/"\>(.*)\<\/label\>/', "\">{$label}</label>", $html );
+        return preg_replace( "/\>{$option->name}\<\/label\>/", ">{$label}</label>", $html, 1 );
     }
 
     /**
