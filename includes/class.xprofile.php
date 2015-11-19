@@ -241,9 +241,9 @@ class BPML_XProfile
                         }
                     }
                     if ( $_value ) {
-                        // Expected format is search URL
-                        $value = preg_replace("/(<([\w]+)[^>]*>){$field->data->value}(<\/\\2>)/",
-                                "$1{$_value}$3", $value, -1, $count);
+                        // Expected format is search link
+                        $value = str_replace( ">{$field->data->value}</a>",
+                                ">{$_value}</a>", $value, $count );
                         if (!$count) {
                             $value = $_value;
                         }
@@ -256,9 +256,9 @@ class BPML_XProfile
                         $_value = icl_t($this->_context,
                                 $this->sanitize_option_basename( $option, $field->id ) . ' name',
                                 $option->name);
-                        // Expected format is search URL
-                        $value = preg_replace("/(<([\w]+)[^>]*>){$option->name}(<\/\\2>)/",
-                                "$1{$_value}$3", $value, -1, $count);
+                        // Expected format is search link
+                        $value = str_replace( ">{$option->name}</a>",
+                                ">{$_value}</a>", $value, $count );
                         // CSV list
                         if ( !$count && strpos( $value, $option->name ) !== false ) {
                             $_ex_values = explode( ',', $value );
