@@ -61,6 +61,8 @@ Support for language as parameter will not be added soon as we're looking for so
 * Fixed strict standards warning for PHP 5.6
 * Fixed regex for stripping language from bp_uri
 * Fixed field tabs on profile screen
+* Fixed profile view for radio and checkboxes fields 
+* Fixed profile view for fields that have values starting with number 
 * Added ability to switch off verbose rules 
 
 = 1.5.1 =
