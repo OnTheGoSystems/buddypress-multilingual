@@ -5,7 +5,7 @@
   Description: BuddyPress Multilingual. <a href="http://wpml.org/?page_id=2890">Documentation</a>.
   Author: OnTheGoSystems
   Author URI: http://www.onthegosystems.com
-  Version: 1.5.2
+  Version: 1.5.3-dev
  */
 
 define( 'BPML_VERSION', '1.5.2' );
