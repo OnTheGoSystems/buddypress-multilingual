@@ -10,7 +10,7 @@ class BPML_Filters
         // Filter BP AJAX URL (add query args 'lang' and '_bpml_ac')
         add_filter( 'bp_core_ajax_url', array($this, 'core_ajax_url_filter') );
         // Filter language switcher
-        add_filter( 'icl_ls_languages', array($this, 'icl_ls_languages_filter') );
+        add_filter( 'icl_ls_languages', array($this, 'icl_ls_languages_filter'), 99 );
         // Adjust BP pages IDs
         add_filter( 'bp_core_get_directory_page_ids', array($this, 'filter_page_ids'), 0 );
         // WPML Convert URL
@@ -121,10 +121,13 @@ class BPML_Filters
                     $offset = intval( $bp->unfiltered_uri_offset ) + 1;
                     $append_array = array_slice( $unfiltered_uri, $offset );
                     $append = implode( '/', $append_array );
+                    $default_language = apply_filters( 'wpml_default_language', null );
                     foreach ( $languages as $code => &$language ) {
-                        $translated_page_id = icl_object_id( $page->ID, 'page', false, $code );
+                        $translated_page_id = apply_filters( 'wpml_object_id', $page->ID, 'page', false, $code );
                         if ( $translated_page_id ) {
+                            do_action( 'wpml_switch_language', $code );
                             $page_permalink = untrailingslashit( get_permalink( $translated_page_id ) );
+                            do_action( 'wpml_switch_language', $default_language );
                             $language['url'] = "{$page_permalink}/{$append}";
                         }
                     }
