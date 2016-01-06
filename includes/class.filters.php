@@ -121,13 +121,13 @@ class BPML_Filters
                     $offset = intval( $bp->unfiltered_uri_offset ) + 1;
                     $append_array = array_slice( $unfiltered_uri, $offset );
                     $append = implode( '/', $append_array );
-                    $default_language = apply_filters( 'wpml_default_language', null );
+                    $current_language = apply_filters( 'wpml_current_language', null );
                     foreach ( $languages as $code => &$language ) {
                         $translated_page_id = apply_filters( 'wpml_object_id', $page->ID, 'page', false, $code );
                         if ( $translated_page_id ) {
                             do_action( 'wpml_switch_language', $code );
                             $page_permalink = untrailingslashit( get_permalink( $translated_page_id ) );
-                            do_action( 'wpml_switch_language', $default_language );
+                            do_action( 'wpml_switch_language', $current_language );
                             $language['url'] = "{$page_permalink}/{$append}";
                         }
                     }
