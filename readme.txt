@@ -27,10 +27,6 @@ Requirements:
  * Filters all links to maintain right language selection
  * Allows translation of profile fields
 
-= New! Customize BuddyPress further using Types and Views =
-
-BPML is now compatible with [Types - The Custom Types and Custom Fields Plugin](http://wp-types.com/home/types-manage-post-types-taxonomy-and-custom-fields/) and [Views - The Custom Content Display Plugin](http://wp-types.com/home/views-create-elegant-displays-for-your-content/). Types and Views allow you to customize BuddyPress further by controlling custom content and displaying it any way you choose.
-
 = Need Support? =
 
 Please submit support requests to **[WPML forum](http://wpml.org/forums/forum/english-support/)**. Remember to report:
