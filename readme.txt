@@ -55,6 +55,7 @@ Support for language as parameter will not be added soon as we're looking for so
 
 = 1.5.3 =
 * Fixed issue with WPML language switcher on profile pages
+* Enabled uploading group cover images from screens in other languages
 * Updated general info
 
 = 1.5.2 =
