@@ -157,7 +157,7 @@ class BPML_Filters
 
     public function filter_page_ids( $page_ids = array() ){
         foreach( $page_ids as $k => &$page_id ){
-            $page_id = icl_object_id( $page_id, 'page', true );
+            $page_id = apply_filters( 'wpml_object_id', $page_id, 'page', true );
         }
         return $page_ids;
     }

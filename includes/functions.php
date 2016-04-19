@@ -34,20 +34,20 @@ function bpml_rewrite_rules_array_filter( $rewrite_rules ){
 }
 
 function bpml_is_language_per_domain() {
-    return icl_get_setting( 'language_negotiation_type', false ) == 2;
+    return apply_filters( 'wpml_setting', null, 'language_negotiation_type' ) == 2;
 }
 
 function bpml_is_language_per_dir() {
-    return icl_get_setting( 'language_negotiation_type', false ) == 1;
+    return apply_filters( 'wpml_setting', null, 'language_negotiation_type', false ) == 1;
 }
 
 function bpml_is_default_language_in_directory() {
-    $settings = icl_get_setting( 'urls', array() );
-    return icl_get_setting( 'language_negotiation_type', false ) == 1 && !empty( $settings['directory_for_default_language'] );
+    $settings = apply_filters( 'wpml_setting', null, 'urls' );
+    return apply_filters( 'wpml_setting', null, 'language_negotiation_type' ) == 1 && !empty( $settings['directory_for_default_language'] );
 }
 
 function bpml_is_langauge_as_param() {
-    return icl_get_setting( 'language_negotiation_type', false ) == 3;
+    return apply_filters( 'wpml_setting', null, 'language_negotiation_type' ) == 3;
 }
 
 function bpml_admin_notice_required_plugins() {
