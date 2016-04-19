@@ -14,9 +14,11 @@ function bpml_use_verbose_rules(){
 
 /**
  * Modifies and collects rewrite rules for pages.
- * 
+ *
  * @see bpml_rewrite_rules_array_filter
  * @see http://codex.wordpress.org/Plugin_API/Filter_Reference/page_rewrite_rules
+ * @param $page_rewrite_rules
+ * @return array
  */
 function bpml_page_rewrite_rules_filter( $page_rewrite_rules ){
     $GLOBALS['bpml_page_rewrite_rules'] = $page_rewrite_rules;
@@ -25,9 +27,11 @@ function bpml_page_rewrite_rules_filter( $page_rewrite_rules ){
 
 /**
  * Re-orders rewrite rules by pre-pending collected rules.
- * 
+ *
  * @see bpml_page_rewrite_rules_filter
  * @see http://codex.wordpress.org/Plugin_API/Filter_Reference/rewrite_rules_array
+ * @param $rewrite_rules
+ * @return mixed
  */
 function bpml_rewrite_rules_array_filter( $rewrite_rules ){
     return $GLOBALS['bpml_page_rewrite_rules'] + $rewrite_rules;
