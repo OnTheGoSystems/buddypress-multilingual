@@ -56,6 +56,8 @@ Support for language as parameter will not be added soon as we're looking for so
 = 1.5.4 =
 * Updated deprecated WPML API calls
 * Verbose rules disabled by default
+* Added WPML XML Config file
+* Disabled translating member directory to avoid misusage
 
 = 1.5.3 =
 * Fixed issue with WPML language switcher on profile pages
