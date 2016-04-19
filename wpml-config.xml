@@ -1,0 +1,5 @@
+<wpml-config>	  
+    <taxonomies>
+        <taxonomy translate="0">bp_member_type</taxonomy>
+    </taxonomies>
+</wpml-config>
