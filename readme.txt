@@ -57,6 +57,7 @@ Support for language as parameter will not be added soon as we're looking for so
 * Updated deprecated WPML API calls
 * Verbose rules disabled by default
 * Added WPML XML Config file
+* Enabled translating email notifications
 * Disabled translating member directory to avoid misusage
 
 = 1.5.3 =
