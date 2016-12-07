@@ -67,6 +67,7 @@ function bpml_admin_notice_wpml_settings() {
 }
 
 function bpml_sanitize_string_name( $string, $max_length = 30 ) {
+	$max_length = apply_filters( 'bpml_xprofile_string_name_max_length', $max_length );
     $string = sanitize_text_field( $string );
     if ( strlen( $string ) > $max_length ) {
         $string = substr( $string, 0, strrpos( substr( $string, 0, $max_length ), ' ' ) );
