@@ -91,9 +91,11 @@ class BPML_Filters
                  * Only case so far known is when WP_Query queried_object is messed up by BP.
                  * BP sets queried object to be BP content type, but it's fake WP_Post without ID.
                  */
+	            // @todo Add persistent message for admin to report and mark as deprecated
                 if ( empty( $languages )
                         && method_exists( $sitepress, 'set_wp_query' )
                         && method_exists( $sitepress, 'get_ls_languages' ) ) {
+
                     // Clone original $wp_query
                     $_wp_query = clone $wp_query;
                     // Fix query
