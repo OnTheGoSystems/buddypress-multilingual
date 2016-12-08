@@ -4,7 +4,7 @@
  */
 class BPML_Filters
 {
-    protected $_icl_ls_languages;
+    protected $_icl_ls_languages, $bp_current_page_id;
 
     public function __construct() {
         // Filter BP AJAX URL (add query args 'lang' and '_bpml_ac')
@@ -18,6 +18,11 @@ class BPML_Filters
         add_filter( 'bp_uri', array($this, 'uri_filter'), 0 );
         // Remove WPML post availability
         add_action( 'bp_ready', array($this, 'remove_wpml_post_availability_hook') );
+	    add_action( 'bp_init', function(){
+		    if ( bp_is_activity_component() ) {
+			    add_filter( 'parse_query', array( $this, 'wpml_fix_activity_redirection' ), 5 );
+		    }
+	    }, 999 );
     }
 
     /**
@@ -162,6 +167,25 @@ class BPML_Filters
             $page_id = apply_filters( 'wpml_object_id', $page_id, 'page', true );
         }
         return $page_ids;
+    }
+
+    public function wpml_fix_activity_redirection( $q ){
+	    if ( empty( $q->get( 'page_id' ) ) && !empty( $q->get( 'pagename' ) ) ) {
+		    if ( is_null( $this->bp_current_page_id ) ) {
+			    $bp_pages = bp_core_get_directory_pages();
+			    $bp_current_component = bp_current_component();
+			    if ( isset( $bp_pages->members->id ) ) {
+				    $this->bp_current_page_id = $bp_pages->members->id;
+			    } else if ( isset( $bp_pages->{$bp_current_component}->id ) ) {
+				    $this->bp_current_page_id = $bp_pages->{$bp_current_component}->id;
+			    } else {
+				    // Failed - add BuddyPress main page(s)
+				    $this->bp_current_page_id = 0;
+			    }
+		    }
+		    $q->set( 'page_id', $this->bp_current_page_id ) ;
+	    }
+	    return $q;
     }
 
 }
