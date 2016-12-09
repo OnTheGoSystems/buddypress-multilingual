@@ -2,30 +2,31 @@
 Contributors: icanlocalize, jozik
 Donate link: http://wpml.org/documentation/related-projects/buddypress-multilingual/
 Tags: i18n, translation, localization, language, multilingual, WPML, BuddyPress
-Requires at least: 3.0
+Requires at least: 3.9
 Tested up to: 4.7
-Stable tag: 1.5.5
+Stable tag: 1.5.4
+License: GPLv2
 
 BuddyPress Multilingual allows BuddyPress sites to run fully multilingual using the WPML plugin.
 
 == Description ==
 
-The plugin allows building multilingual BuddyPress sites. It works with single-site or multi-site BuddyPress installations. Both the main site and child blogs can run multilingual.
+The plugin allows building multilingual [BuddyPress](https://wordpress.org/plugins/buddypress/) sites with [WPML](http://wpml.org/). It works with single-site or multi-site BuddyPress installations. Both the main site and child blogs can run multilingual.
 
 Guest blogs can choose their language and create multilingual contents. Additionally, each guest can choose the admin language individually .
 
-This plugin requires [WPML](http://wpml.org/). It uses WPML's language API and hooks to BuddyPress to make it multilingual.
-
 Requirements:
 
-* WPML 3.0.x or higher. You must enable 'languages per directories' or 'languages per domain'.
+* WPML 3.6.x or higher. You must enable 'languages per directories' or 'languages per domain'.
 * Supports BuddyPress versions up to 2.x
 
 = Features =
 
- * Enables multilingual BuddyPress components
- * Filters all links to maintain right language selection
- * Allows translation of profile fields
+* Adds language switching to all BuddyPress pages (Activity, Groups, Profile and Register page)
+* Allows to select the language when viewing user profiles
+* Keeps the language consistent when clicking on different links (by adding the language to links)
+* Allows to translate email notifications
+* Keeps the entire BuddyPress workflow in the current language (create group, change avatars etc.)
 
 = Need Support? =
 
@@ -49,7 +50,10 @@ Support for language as parameter will not be added soon as we're looking for so
 
 == Screenshots ==
 
-1. Multilingual main BuddyPress page.
+1. Language switcher in the navigation
+2. Message in other language
+3. Activity stream
+4. Profile
 
 == Changelog ==
 
@@ -63,7 +67,7 @@ Support for language as parameter will not be added soon as we're looking for so
 * Verbose rules disabled by default
 * Added WPML XML Config file
 * Enabled translating email notifications
-* Disabled translating member directory for correct usage
+* Disabled translating member directory to avoid misusage
 
 = 1.5.3 =
 * Fixed issue with WPML language switcher on profile pages
