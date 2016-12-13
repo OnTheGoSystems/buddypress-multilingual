@@ -1,8 +1,6 @@
 <?php
 /**
  * Translates group and profile field labels.
- * 
- * Uses icl_t(), icl_register_string() and icl_unregister_string().
  */
 class BPML_XProfile
 {
@@ -69,12 +67,12 @@ class BPML_XProfile
         }
         // Register name
         if ( !empty( $field->name ) ) {
-            icl_register_string( $this->_context,
+	        do_action( 'wpml_register_single_string', $this->_context,
                     "{$this->_field_string_prefix}{$field->id} name", $field->name );
         }
         // Register description
         if ( !empty( $field->description ) ) {
-            icl_register_string( $this->_context,
+	        do_action( 'wpml_register_single_string', $this->_context,
                     "{$this->_field_string_prefix}{$field->id} description", $field->description );
         }
         // Register options
@@ -83,12 +81,12 @@ class BPML_XProfile
             $options = $bp_field->get_children();
             foreach ( $options as $option ) {
                 if ( !empty( $option->name ) ) {
-                    icl_register_string( $this->_context,
+	                do_action( 'wpml_register_single_string', $this->_context,
                             $this->sanitize_option_basename( $option, $field->id ) . ' name',
                             $option->name );
                 }
                 if ( !empty( $option->description ) ) {
-                    icl_register_string( $this->_context,
+	                do_action( 'wpml_register_single_string', $this->_context,
                             $this->sanitize_option_basename( $option, $field->id ) . ' description',
                             $option->description );
                 }
@@ -97,69 +95,73 @@ class BPML_XProfile
     }
 
     public function deleted_field_action( $field ) {
-        // Unregister name
-        if ( !empty( $field->name ) ) {
-            icl_unregister_string( $this->_context,
-                    "{$this->_field_string_prefix}{$field->id} name", $field->name );
-        }
-        // Unregister description
-        if ( !empty( $field->description ) ) {
-            icl_unregister_string( $this->_context,
-                    "{$this->_field_string_prefix}{$field->id} description", $field->description );
-        }
-        // Unregister options
-        if ( in_array( $field->type, array('radio', 'checkbox', 'selectbox', 'multiselectbox') ) ) {
-            $bp_field = xprofile_get_field($field->id);
-            $options = $bp_field->get_children();
-            foreach ( $options as $option ) {
-                if ( !empty( $option->name ) ) {
-                    icl_unregister_string( $this->_context,
-                            $this->sanitize_option_basename( $option, $field->id ) . ' name',
-                            $option->name );
-                }
-                if ( !empty( $option->description ) ) {
-                    icl_unregister_string( $this->_context,
-                            $this->sanitize_option_basename( $option, $field->id ) . ' description',
-                            $option->description );
-                }
-            }
-        }
+	    if ( function_exists( 'icl_unregister_string' ) ) {
+		    // Unregister name
+		    if ( ! empty( $field->name ) ) {
+			    icl_unregister_string( $this->_context,
+				    "{$this->_field_string_prefix}{$field->id} name", $field->name );
+		    }
+		    // Unregister description
+		    if ( ! empty( $field->description ) ) {
+			    icl_unregister_string( $this->_context,
+				    "{$this->_field_string_prefix}{$field->id} description", $field->description );
+		    }
+		    // Unregister options
+		    if ( in_array( $field->type, array( 'radio', 'checkbox', 'selectbox', 'multiselectbox' ) ) ) {
+			    $bp_field = xprofile_get_field( $field->id );
+			    $options  = $bp_field->get_children();
+			    foreach ( $options as $option ) {
+				    if ( ! empty( $option->name ) ) {
+					    icl_unregister_string( $this->_context,
+						    $this->sanitize_option_basename( $option, $field->id ) . ' name',
+						    $option->name );
+				    }
+				    if ( ! empty( $option->description ) ) {
+					    icl_unregister_string( $this->_context,
+						    $this->sanitize_option_basename( $option, $field->id ) . ' description',
+						    $option->description );
+				    }
+			    }
+		    }
+	    }
     }
 
     public function saved_group_action( $group ) {
         // Register name
         if ( !empty( $group->name ) ) {
-            icl_register_string( $this->_context,
+	        do_action( 'wpml_register_single_string', $this->_context,
                     "{$this->_group_string_prefix}{$group->id} name", $group->name );
         }
         // Register description
         if ( !empty( $group->description ) ) {
-            icl_register_string( $this->_context,
+	        do_action( 'wpml_register_single_string', $this->_context,
                     "{$this->_group_string_prefix}{$group->id} description", $group->description );
         }
     }
 
     public function deleted_group_action( $group ) {
-        // Unregister name
-        if ( !empty( $group->name ) ) {
-            icl_unregister_string( $this->_context,
-                    "{$this->_group_string_prefix}{$group->id} name", $group->name );
-        }
-        // Unregister description
-        if ( !empty( $group->description ) ) {
-            icl_unregister_string( $this->_context,
-                    "{$this->_group_string_prefix}{$group->id} description", $group->description );
-        }
+	    if ( function_exists( 'icl_unregister_string' ) ) {
+		    // Unregister name
+		    if ( ! empty( $group->name ) ) {
+			    icl_unregister_string( $this->_context,
+				    "{$this->_group_string_prefix}{$group->id} name", $group->name );
+		    }
+		    // Unregister description
+		    if ( ! empty( $group->description ) ) {
+			    icl_unregister_string( $this->_context,
+				    "{$this->_group_string_prefix}{$group->id} description", $group->description );
+		    }
+	    }
     }
 
     public function t_name( $name ) {
         global $field;
-        return icl_t( $this->_context, "{$this->_field_string_prefix}{$field->id} name", $name );
+        return apply_filters( 'wpml_translate_single_string', $name, $this->_context, "{$this->_field_string_prefix}{$field->id} name" );
     }
 
     public function t_description( $description ) {
         global $field;
-        return icl_t( $this->_context, "{$this->_field_string_prefix}{$field->id} description", $description );
+        return apply_filters( 'wpml_translate_single_string', $description, $this->_context, "{$this->_field_string_prefix}{$field->id} description" );
     }
 
     public function t_options( $options ) {
@@ -167,9 +169,8 @@ class BPML_XProfile
         foreach ( $options as &$option ) {
             // Just translate description. Name can messup forms.
             if ( !empty( $option->description ) ) {
-                $option->description = icl_t( $this->_context,
-                        $this->sanitize_option_basename( $option, $field->id ) . ' description',
-                        $option->description );
+                $option->description = apply_filters( 'wpml_translate_single_string', $option->description,
+	                $this->_context, $this->sanitize_option_basename( $option, $field->id ) . ' description' );
             }
         }
         return $options;
@@ -177,9 +178,8 @@ class BPML_XProfile
 
     protected function _t_option_name( $option, $field_id ) {
         if ( !empty( $option->name ) ) {
-            return icl_t( $this->_context,
-                    $this->sanitize_option_basename( $option, $field_id ) . ' name',
-                    $option->name );
+            return apply_filters( 'wpml_translate_single_string', $option->name, $this->_context,
+                    $this->sanitize_option_basename( $option, $field_id ) . ' name' );
         }
         return isset( $option->name ) ? $option->name : '';
     }
@@ -235,9 +235,8 @@ class BPML_XProfile
                     $_value = false;
                     foreach ( $options as $option ) {
                         if ( isset($option->name) && $option->name == $field->data->value ) {
-                            $_value = icl_t( $this->_context,
-                                    $this->sanitize_option_basename( $option, $field->id ) . ' name',
-                                    $option->name );
+                            $_value = apply_filters( 'wpml_translate_single_string', $option->name, $this->_context,
+                                    $this->sanitize_option_basename( $option, $field->id ) . ' name' );
                         }
                     }
                     if ( $_value ) {
@@ -253,9 +252,8 @@ class BPML_XProfile
                 case 'multiselectbox':
                 case 'checkbox':
                     foreach ( $options as $option ) {
-                        $_value = icl_t($this->_context,
-                                $this->sanitize_option_basename( $option, $field->id ) . ' name',
-                                $option->name);
+                        $_value = apply_filters( 'wpml_translate_single_string', $option->name, $this->_context,
+                                $this->sanitize_option_basename( $option, $field->id ) . ' name' );
                         // Expected format is search link
                         $value = str_replace( ">{$option->name}</a>",
                                 ">{$_value}</a>", $value, $count );
@@ -291,8 +289,8 @@ class BPML_XProfile
             wp_cache_set( $cache_key, $group_id );
         }
         
-        return $group_id ? icl_t( $this->_context,
-                "{$this->_group_string_prefix}{$group_id} name", $group_name ) : $group_name;
+        return $group_id ? apply_filters( 'wpml_translate_single_string', $group_name, $this->_context,
+                "{$this->_group_string_prefix}{$group_id} name" ) : $group_name;
     }
 
     public function sanitize_option_basename( $option, $field_id ) {
@@ -308,7 +306,8 @@ class BPML_XProfile
     }
 
     protected function _scan_needed() {
-        if ( $groups = bp_xprofile_get_groups( array('fetch_fields' => true) ) ) {
+        if ( function_exists( 'icl_st_is_registered_string' )
+             && $groups = bp_xprofile_get_groups( array('fetch_fields' => true) ) ) {
             foreach ( $groups as $group ) {
                 $is_registered = icl_st_is_registered_string($this->_context,
                     "{$this->_group_string_prefix}{$group->id} name");
@@ -350,8 +349,4 @@ class BPML_XProfile
 
 }
 
-if ( function_exists( 'icl_t' ) && function_exists( 'icl_register_string' )
-        && function_exists( 'icl_unregister_string' )
-        && function_exists( 'icl_st_is_registered_string' ) ) {
-    new BPML_XProfile();
-}
+new BPML_XProfile();
