@@ -4,7 +4,7 @@ Donate link: http://wpml.org/documentation/related-projects/buddypress-multiling
 Tags: i18n, translation, localization, language, multilingual, WPML, BuddyPress
 Requires at least: 3.9
 Tested up to: 4.7
-Stable tag: 1.5.4
+Stable tag: 1.5.5
 License: GPLv2
 
 BuddyPress Multilingual allows BuddyPress sites to run fully multilingual using the WPML plugin.
@@ -38,7 +38,7 @@ Please submit support requests to **[WPML forum](http://wpml.org/forums/forum/en
 
 == Installation ==
 
-1. Unzip and upload contents of sitepress-bp.zip file to the `/wp-content/plugins/` directory.
+1. Unzip and upload contents of buddypress-multilingual.zip file to the `/wp-content/plugins/` directory.
 2. Activate the plugin.
 3. Enable WPML and BuddyPress.
 
