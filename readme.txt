@@ -5,6 +5,7 @@ Tags: i18n, translation, localization, language, multilingual, WPML, BuddyPress
 Requires at least: 3.9
 Tested up to: 4.7
 Stable tag: 1.5.5.1
+Stable tag: 1.5.5
 License: GPLv2
 
 BuddyPress Multilingual allows BuddyPress sites to run fully multilingual using the WPML plugin.
