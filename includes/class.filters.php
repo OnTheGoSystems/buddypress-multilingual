@@ -148,9 +148,9 @@ class BPML_Filters
 
     public function remove_wpml_post_availability_hook() {
         if ( !bp_is_blog_page() ) {
-            global $icl_language_switcher;
-            remove_filter( 'the_content',
-                    array($icl_language_switcher, 'post_availability'), 100 );
+        	add_filter( 'wpml_ls_post_alternative_languages', function(){
+        		return '';
+	        });
         }
     }
 
@@ -170,7 +170,9 @@ class BPML_Filters
     }
 
     public function wpml_fix_activity_redirection( $q ){
-	    if ( empty( $q->get( 'page_id' ) ) && !empty( $q->get( 'pagename' ) ) ) {
+	    if ( !bp_is_blog_page()
+	        && (bool) $q->get( 'page_id' ) === false
+	        && (bool) $q->get( 'pagename' ) === true ) {
 		    if ( is_null( $this->bp_current_page_id ) ) {
 			    $bp_pages = bp_core_get_directory_pages();
 			    $bp_current_component = bp_current_component();
