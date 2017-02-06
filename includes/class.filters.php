@@ -169,26 +169,48 @@ class BPML_Filters
         return $page_ids;
     }
 
-    public function wpml_fix_activity_redirection( $q ){
-	    if ( !bp_is_blog_page()
-	        && (bool) $q->get( 'page_id' ) === false
-	        && (bool) $q->get( 'pagename' ) === true ) {
-		    if ( is_null( $this->bp_current_page_id ) ) {
-			    $bp_pages = bp_core_get_directory_pages();
-			    $bp_current_component = bp_current_component();
-			    if ( isset( $bp_pages->members->id ) ) {
-				    $this->bp_current_page_id = $bp_pages->members->id;
-			    } else if ( isset( $bp_pages->{$bp_current_component}->id ) ) {
-				    $this->bp_current_page_id = $bp_pages->{$bp_current_component}->id;
-			    } else {
-				    // Failed - add BuddyPress main page(s)
-				    $this->bp_current_page_id = 0;
-			    }
-		    }
-		    $q->set( 'page_id', $this->bp_current_page_id ) ;
-	    }
-	    return $q;
-    }
+	/**
+	 * Fixes redirection to root Activity page.
+	 * WPML_Name_Query_Filter_Translated::select_best_match()
+	 *
+	 * Affected views:
+	 * 1. Single activity /activity/p/6/
+	 * 2. Activity by member /members/admin/activity/ (Profile > Activity)
+	 *
+	 * @param $q WP_Query
+	 *
+	 * @return object WP_Query
+	 */
+	public function wpml_fix_activity_redirection( $q ){
+		if ( !defined( 'DOING_AJAX' ) && !bp_is_blog_page()
+		     && (bool) $q->get( 'page_id' ) === false
+		     && (bool) $q->get( 'pagename' ) === true ) {
+
+			$bp_current_component = bp_current_component();
+			$bp_current_action    = bp_current_action();
+
+			if ( ( $bp_current_component == 'activity'
+			       && ( $bp_current_action == 'p'
+			            || is_numeric( $bp_current_action )
+			            || $bp_current_action == 'just-me')
+			) ) {
+
+				if ( is_null( $this->bp_current_page_id ) ) {
+					$bp_pages = bp_core_get_directory_pages();
+					if ( isset( $bp_pages->members->id ) ) {
+						$this->bp_current_page_id = $bp_pages->members->id;
+					} else if ( isset( $bp_pages->{$bp_current_component}->id ) ) {
+						$this->bp_current_page_id = $bp_pages->{$bp_current_component}->id;
+					} else {
+						// Failed - add BuddyPress main page(s)
+						$this->bp_current_page_id = 0;
+					}
+				}
+				$q->set( 'page_id', $this->bp_current_page_id );
+			}
+		}
+		return $q;
+	}
 
 }
 
