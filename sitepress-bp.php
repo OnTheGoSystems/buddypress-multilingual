@@ -57,6 +57,16 @@ function bpml_init() {
             // XProfile
             include_once dirname( __FILE__ ) . '/includes/class.xprofile.php';
 
+            // User Language
+	        require_once dirname(__FILE__) . '/classes/class-buddypress-multilingual-user-language-form.php';
+	        require_once dirname(__FILE__) . '/classes/class-buddypress-multilingual-user-language-redirection.php';
+
+	        $bpml_user_language_form = new Buddypress_Multilingual_User_Language_Form();
+	        $bpml_user_language_form->add_hooks();
+
+	        $bpml_user_language_redirection = new Buddypress_Multilingual_User_Language_Redirection();
+	        $bpml_user_language_redirection->add_hooks();
+
         }
     } else if ( is_admin() ) {
         add_action( 'admin_notices', 'bpml_admin_notice_required_plugins' );
