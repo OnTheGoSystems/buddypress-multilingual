@@ -19,7 +19,7 @@ class BPML_Filters
         // Remove WPML post availability
         add_action( 'bp_ready', array($this, 'remove_wpml_post_availability_hook') );
 	    add_action( 'bp_init', function(){
-		    if ( bp_is_activity_component() || bp_is_groups_component() ) {
+		    if ( bp_is_activity_component() || bp_is_groups_component() || has_filter( 'bpml_redirection_page_id' ) ) {
 			    add_filter( 'parse_query', array( $this, 'wpml_fix_redirection' ), 5 );
 		    }
 	    }, 999 );
