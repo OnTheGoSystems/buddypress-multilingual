@@ -4,7 +4,7 @@
  */
 class BPML_Filters
 {
-    protected $_icl_ls_languages, $bp_current_page_id;
+    protected $_icl_ls_languages;
 
     public function __construct() {
         // Filter BP AJAX URL (add query args 'lang' and '_bpml_ac')
@@ -19,8 +19,8 @@ class BPML_Filters
         // Remove WPML post availability
         add_action( 'bp_ready', array($this, 'remove_wpml_post_availability_hook') );
 	    add_action( 'bp_init', function(){
-		    if ( bp_is_activity_component() ) {
-			    add_filter( 'parse_query', array( $this, 'wpml_fix_activity_redirection' ), 5 );
+		    if ( bp_is_activity_component() || bp_is_groups_component() || has_filter( 'bpml_redirection_page_id' ) ) {
+			    add_filter( 'parse_query', array( $this, 'wpml_fix_redirection' ), 5 );
 		    }
 	    }, 999 );
     }
@@ -170,45 +170,59 @@ class BPML_Filters
     }
 
 	/**
-	 * Fixes redirection to root Activity page.
+	 * Fixes redirection caused by best match.
 	 * WPML_Name_Query_Filter_Translated::select_best_match()
 	 *
 	 * Affected views:
-	 * 1. Single activity /activity/p/6/
-	 * 2. Activity by member /members/admin/activity/ (Profile > Activity)
+	 * 1. Profile activity /members/admin/activity/ (Profile > Activity)
+	 * 2. Single activity /activity/p/6/
+	 * 3. Group members /groups/group-name/members/
+	 * 4. Profile groups /members/admin/groups/ (Profile > Groups)
+	 * 5. Profile group activity /members/admin/activity/groups/ (Profile > sub Groups)
 	 *
 	 * @param $q WP_Query
 	 *
 	 * @return object WP_Query
 	 */
-	public function wpml_fix_activity_redirection( $q ){
+	public function wpml_fix_redirection( $q ){
 		if ( !defined( 'DOING_AJAX' ) && !bp_is_blog_page()
 		     && (bool) $q->get( 'page_id' ) === false
 		     && (bool) $q->get( 'pagename' ) === true ) {
 
 			$bp_current_component = bp_current_component();
 			$bp_current_action    = bp_current_action();
+			$bp_pages             = bp_core_get_directory_pages();
 
-			if ( ( $bp_current_component == 'activity'
-			       && ( $bp_current_action == 'p'
-			            || is_numeric( $bp_current_action )
-			            || $bp_current_action == 'just-me')
-			) ) {
-
-				if ( is_null( $this->bp_current_page_id ) ) {
-					$bp_pages = bp_core_get_directory_pages();
-					if ( isset( $bp_pages->members->id ) ) {
-						$this->bp_current_page_id = $bp_pages->members->id;
-					} else if ( isset( $bp_pages->{$bp_current_component}->id ) ) {
-						$this->bp_current_page_id = $bp_pages->{$bp_current_component}->id;
-					} else {
-						// Failed - add BuddyPress main page(s)
-						$this->bp_current_page_id = 0;
-					}
+			if ( $bp_current_component == 'activity' && $bp_current_action == 'just-me' ) {
+				if ( isset( $bp_pages->members->id ) ) {
+					$q->set( 'page_id', $bp_pages->members->id );
 				}
-				$q->set( 'page_id', $this->bp_current_page_id );
+			} elseif ( $bp_current_component == 'activity'
+			           && ( $bp_current_action == 'p' || is_numeric( $bp_current_action ) )
+			) {
+				if ( isset( $bp_pages->members->id ) ) {
+					$q->set( 'page_id', $bp_pages->members->id );
+				}
+			} elseif ( $bp_current_component == 'groups' && $bp_current_action == 'members' ) {
+				if ( isset( $bp_pages->groups->id ) ) {
+					$q->set( 'page_id', $bp_pages->groups->id );
+				}
+			} elseif ( $bp_current_component == 'groups' && $bp_current_action == 'my-groups' ) {
+				if ( isset( $bp_pages->members->id ) ) {
+					$q->set( 'page_id', $bp_pages->members->id );
+				}
+			} elseif ( $bp_current_component == 'activity' && $bp_current_action == 'groups' ) {
+				if ( isset( $bp_pages->members->id ) ) {
+					$q->set( 'page_id', $bp_pages->members->id );
+				}
+			} else {
+				$page_id = apply_filters( 'bpml_redirection_page_id', null, $bp_current_component, $bp_current_action, $bp_pages );
+				if ( $page_id ) {
+					$q->set( 'page_id', $page_id );
+				}
 			}
 		}
+
 		return $q;
 	}
 
