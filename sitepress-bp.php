@@ -57,6 +57,10 @@ function bpml_init() {
             // XProfile
             include_once dirname( __FILE__ ) . '/includes/class.xprofile.php';
 
+	        include_once dirname( __FILE__ ) . '/includes/class-bpml-compatibility.php';
+	        $bpml_compatibility = new BPML_Compatibility();
+	        $bpml_compatibility->add_hooks();
+
         }
     } else if ( is_admin() ) {
         add_action( 'admin_notices', 'bpml_admin_notice_required_plugins' );
