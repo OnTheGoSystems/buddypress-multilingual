@@ -68,12 +68,12 @@ class BPML_XProfile
         // Register name
         if ( !empty( $field->name ) ) {
 	        do_action( 'wpml_register_single_string', $this->_context,
-                    "{$this->_field_string_prefix}{$field->id} name", $field->name );
+                    "{$this->_field_string_prefix}{$field->id} name", stripslashes( $field->name ) );
         }
         // Register description
         if ( !empty( $field->description ) ) {
 	        do_action( 'wpml_register_single_string', $this->_context,
-                    "{$this->_field_string_prefix}{$field->id} description", $field->description );
+                    "{$this->_field_string_prefix}{$field->id} description", stripslashes( $field->description ) );
         }
         // Register options
         if ( in_array( $field->type, array('radio', 'checkbox', 'selectbox', 'multiselectbox') ) ) {
@@ -83,12 +83,12 @@ class BPML_XProfile
                 if ( !empty( $option->name ) ) {
 	                do_action( 'wpml_register_single_string', $this->_context,
                             $this->sanitize_option_basename( $option, $field->id ) . ' name',
-                            $option->name );
+		                    stripslashes( $option->name ) );
                 }
                 if ( !empty( $option->description ) ) {
 	                do_action( 'wpml_register_single_string', $this->_context,
                             $this->sanitize_option_basename( $option, $field->id ) . ' description',
-                            $option->description );
+		                    stripslashes( $option->description ) );
                 }
             }
         }
@@ -156,12 +156,12 @@ class BPML_XProfile
 
     public function t_name( $name ) {
         global $field;
-        return apply_filters( 'wpml_translate_single_string', $name, $this->_context, "{$this->_field_string_prefix}{$field->id} name" );
+        return stripslashes( apply_filters( 'wpml_translate_single_string', $name, $this->_context, "{$this->_field_string_prefix}{$field->id} name" ) );
     }
 
     public function t_description( $description ) {
         global $field;
-        return apply_filters( 'wpml_translate_single_string', $description, $this->_context, "{$this->_field_string_prefix}{$field->id} description" );
+        return stripslashes( apply_filters( 'wpml_translate_single_string', $description, $this->_context, "{$this->_field_string_prefix}{$field->id} description" ) );
     }
 
     public function t_options( $options ) {
@@ -178,8 +178,8 @@ class BPML_XProfile
 
     protected function _t_option_name( $option, $field_id ) {
         if ( !empty( $option->name ) ) {
-            return apply_filters( 'wpml_translate_single_string', $option->name, $this->_context,
-                    $this->sanitize_option_basename( $option, $field_id ) . ' name' );
+            return stripslashes( apply_filters( 'wpml_translate_single_string', $option->name, $this->_context,
+                    $this->sanitize_option_basename( $option, $field_id ) . ' name' ) );
         }
         return isset( $option->name ) ? $option->name : '';
     }
