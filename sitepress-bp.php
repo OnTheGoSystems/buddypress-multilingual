@@ -56,6 +56,10 @@ function bpml_init() {
 
             // XProfile
             include_once dirname( __FILE__ ) . '/includes/class.xprofile.php';
+            // Language filed type
+            include_once dirname( __FILE__ ) . '/includes/class.bp-xprofile-field-type-language.php';
+            // XProfile language setup
+            include_once dirname( __FILE__ ) . '/includes/class.xprofile-language.php';
 
 	        include_once dirname( __FILE__ ) . '/includes/class-bpml-compatibility.php';
 	        $bpml_compatibility = new BPML_Compatibility();
