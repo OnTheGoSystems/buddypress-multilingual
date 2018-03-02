@@ -7,9 +7,8 @@ class BPML_XProfile_Language
 
     public function __construct() {
 
-        add_action( 'bp_init', array( $this, 'set_lang_from_profile' ) );
+        add_action( 'template_redirect', array( $this, 'set_lang_from_profile' ) );
         add_filter( 'bp_xprofile_get_field_types', array( $this, 'xprofile_field_types' ) );
-
     }
 
     public function xprofile_field_types( $field_types ) {
@@ -60,12 +59,22 @@ class BPML_XProfile_Language
         if ( is_admin() )
             return;
 
+        if ( is_404() ) {
+            return;
+        }
+
         if ( $sitepress->get_current_language() != $profile_language ) {
+
+            $is_translated = true;
+            if ( is_singular() ) {
+                $object = get_queried_object();
+                $is_translated = apply_filters( 'wpml_element_has_translations', NULL, $object->ID , $object->post_type );
+            }
 
             $old_url =  (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $url = $sitepress->convert_url( $old_url, $profile_language );
 
-            if ( $url != $old_url ) {
+            if ( $url != $old_url && $is_translated ) {
                 if ( wp_redirect( $url ) )
                     exit();
             }
