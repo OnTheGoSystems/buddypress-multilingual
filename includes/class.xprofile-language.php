@@ -66,7 +66,7 @@ class BPML_XProfile_Language
         if ( $sitepress->get_current_language() != $profile_language ) {
 
             $is_translated = true;
-            if ( is_singular() ) {
+            if ( is_singular() && ! is_buddypress() ) {
                 $object = get_queried_object();
                 $is_translated = apply_filters( 'wpml_element_has_translations', NULL, $object->ID , $object->post_type );
             }
