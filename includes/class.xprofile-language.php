@@ -63,7 +63,7 @@ class BPML_XProfile_Language
             return;
         }
 
-        if ( $sitepress->get_current_language() != $profile_language ) {
+        if ( $sitepress->get_current_language() != $profile_language && ! isset( $_REQUEST['override_profile_lang'] ) ) {
 
             $is_translated = true;
             if ( is_singular() && ! is_buddypress() ) {
