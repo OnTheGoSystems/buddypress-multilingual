@@ -3,7 +3,7 @@ Contributors: icanlocalize, jozik
 Donate link: http://wpml.org/documentation/related-projects/buddypress-multilingual/
 Tags: i18n, translation, localization, language, multilingual, WPML, BuddyPress
 Requires at least: 3.9
-Tested up to: 4.8.1
+Tested up to: 4.9.8
 Stable tag: 1.5.6
 License: GPLv2
 
