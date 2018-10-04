@@ -57,6 +57,9 @@ Support for language as parameter will not be added soon as we're looking for so
 
 == Changelog ==
 
+= 1.6 =
+* Added support for Nouveau templates
+
 = 1.5.6 =
 * Fixed escaping field name and description
 * Added support for BuddyDrive plugin
