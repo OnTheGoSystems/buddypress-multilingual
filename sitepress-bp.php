@@ -5,10 +5,10 @@
   Description: BuddyPress Multilingual. <a href="http://wpml.org/?page_id=2890">Documentation</a>.
   Author: OnTheGoSystems
   Author URI: http://www.onthegosystems.com
-  Version: 1.5.6
+  Version: 1.6
  */
 
-define( 'BPML_VERSION', '1.5.6' );
+define( 'BPML_VERSION', '1.6' );
 define( 'BPML_RELPATH', plugins_url( '', __FILE__ ) );
 add_action( 'plugins_loaded', 'bpml_init', 11 );
 
@@ -38,11 +38,17 @@ function bpml_init() {
                     && !empty( $_POST['data']['bp_activity_last_recorded'] ) ) {
                 $apply_filters = true;
             }
-            // Allow uploading cover images from screens in other languages
-            if ( defined('DOING_AJAX') && isset($_POST['action'])
-                    && $_POST['action'] == 'bp_cover_image_upload' ) {
-                $apply_filters = true;
-            }
+	        // Allow filtering on AJAX actions
+	        if ( defined( 'DOING_AJAX' ) && isset( $_POST['action'] )
+	             && in_array( $_POST['action'],
+			        array(
+				        'bp_cover_image_upload',// Allow uploading cover images from screens in other languages
+				        'post_update',// Allow post update
+			        )
+	             )
+	        ) {
+		        $apply_filters = true;
+	        }
             // Always on frontend
             if ( !is_admin() || $apply_filters ) {
                 include_once dirname( __FILE__ ) . '/includes/class.filters.php';
