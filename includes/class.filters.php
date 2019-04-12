@@ -129,6 +129,21 @@ class BPML_Filters
                     $append_array = array_slice( $unfiltered_uri, $offset );
                     $append = implode( '/', $append_array );
                     $current_language = apply_filters( 'wpml_current_language', null );
+
+	                $add_get_parameters = array();
+	                $parameters_to_copy = apply_filters( 'icl_lang_sel_copy_parameters', array_map( 'trim',
+			                explode( ',', wpml_get_setting_filter( '', 'icl_lang_sel_copy_parameters' ) )
+		                )
+	                );
+
+	                if ( $parameters_to_copy ) {
+		                foreach ( $_GET as $k => $v ) {
+			                if ( in_array( $k, $parameters_to_copy ) ) {
+				                $add_get_parameters[ $k ] = $v;
+			                }
+		                }
+	                }
+
                     foreach ( $languages as $code => &$language ) {
                         $translated_page_id = apply_filters( 'wpml_object_id', $page->ID, 'page', false, $code );
                         if ( $translated_page_id ) {
@@ -137,6 +152,10 @@ class BPML_Filters
                             do_action( 'wpml_switch_language', $current_language );
                             $language['url'] = "{$page_permalink}/{$append}";
                         }
+
+                        if ( $add_get_parameters ) {
+		                    $language['url'] = add_query_arg( $add_get_parameters, $language['url'] );
+	                    }
                     }
                 }
             }
