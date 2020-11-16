@@ -1,5 +1,5 @@
 
-jQuery(document).ready(function($) {
+jQuery(function($) {
     $('.js-bpml-register-fields').click(function() {
         var button = $(this);
         button.off().after('<div class="spinner"></div>').next().show();
