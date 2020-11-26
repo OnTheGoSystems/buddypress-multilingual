@@ -19,7 +19,7 @@ Guest blogs can choose their language and create multilingual contents. Addition
 Requirements:
 
 * WPML 3.6.x or higher. You must enable 'languages per directories' or 'languages per domain'.
-* Supports BuddyPress versions up to 2.x
+* Tested up to BuddyPress 6.3.0
 
 = Features =
 
