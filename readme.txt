@@ -4,7 +4,7 @@ Donate link: http://wpml.org/documentation/related-projects/buddypress-multiling
 Tags: i18n, translation, localization, language, multilingual, WPML, BuddyPress
 Requires at least: 4.7
 Tested up to: 5.6
-Stable tag: 1.6
+Stable tag: 1.6.1
 Requires PHP: 5.6
 License: GPLv2
 
@@ -57,6 +57,9 @@ Support for language as parameter will not be added soon as we're looking for so
 4. Profile
 
 == Changelog ==
+
+= 1.6.1 =
+* Added changes related to WP 5.6 and jQuery migration
 
 = 1.6 =
 * Added support for Nouveau templates
