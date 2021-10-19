@@ -23,7 +23,7 @@ class Groups {
 		foreach ( self::FIELDS as $field ) {
 			do_action(
 				'wpml_register_single_string',
-				'buddypress-multilingual',
+				'bpml',
 				'Group #' . Obj::prop( 'id', $group ) . ' ' . $field,
 				Obj::prop( $field, $group )
 			);
@@ -40,7 +40,7 @@ class Groups {
 			return apply_filters(
 				'wpml_translate_single_string',
 				$value,
-				'buddypress-multilingual',
+				'bpml',
 				'Group #' . Obj::prop( 'id', $group ) . ' ' . $field
 			);
 		};
