@@ -7,7 +7,7 @@ class BPML_XProfile
 
     protected $_context = 'Buddypress Multilingual', $_field_string_prefix = 'profile field ', $_group_string_prefix = 'profile group ';
 
-    public function __construct() {
+    public function add_hooks() {
 
         add_action( 'bp_init', array($this, 'bp_init') );
 

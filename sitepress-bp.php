@@ -17,7 +17,7 @@ add_action( 'plugins_loaded', 'bpml_init', 11 );
 
 function bpml_init() {
 	require_once dirname( __FILE__ ) . '/includes/functions.php';
-	if ( defined( 'BP_VERSION' ) && did_action( 'wpml_loaded' ) ) {
+	if ( ( defined( 'BP_VERSION' ) || defined( 'BP_PLATFORM_VERSION' ) ) && did_action( 'wpml_loaded' ) ) {
 		if ( bpml_is_langauge_as_param() ) {
 			add_action( 'admin_notices', 'bpml_admin_notice_wpml_settings' );
 		} else {
@@ -54,7 +54,9 @@ function bpml_init() {
 			}
 			// Always on frontend
 			if ( !is_admin() || $apply_filters ) {
-				new BPML_Filters();
+				$filters = new BPML_Filters();
+				$filters->add_hooks();
+
 				// Verbose page rewrite rules
 				if ( defined( 'BPML_USE_VERBOSE_PAGE_RULES' ) && BPML_USE_VERBOSE_PAGE_RULES ) {
 					add_action( 'init', 'bpml_use_verbose_rules' );
@@ -64,7 +66,8 @@ function bpml_init() {
 			}
 
 			// XProfile
-			new BPML_XProfile();
+			$xprofile = new BPML_XProfile();
+			$xprofile->add_hooks();
 
 			$bpml_compatibility = new BPML_Compatibility();
 			$bpml_compatibility->add_hooks();
