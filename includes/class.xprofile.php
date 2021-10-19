@@ -348,5 +348,3 @@ class BPML_XProfile
     }
 
 }
-
-new BPML_XProfile();

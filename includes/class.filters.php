@@ -246,5 +246,3 @@ class BPML_Filters
 	}
 
 }
-
-new BPML_Filters();
