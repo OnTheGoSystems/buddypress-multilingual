@@ -7,7 +7,8 @@ use WPML\FP\Fns;
 
 class Groups {
 
-	const FIELDS = [ 'name', 'description' ];
+	const FIELDS     = [ 'name', 'description' ];
+	const TEXTDOMAIN = 'bpml';
 
 	public function addHooks() {
 		add_action( 'groups_group_after_save', [ $this, 'registerStrings' ], 10, 2 );
@@ -26,7 +27,7 @@ class Groups {
 		foreach ( self::FIELDS as $field ) {
 			do_action(
 				'wpml_register_single_string',
-				'bpml',
+				self::TEXTDOMAIN,
 				'Group #' . $get( 'id' ) . ' ' . $field,
 				$get( $field )
 			);
@@ -43,7 +44,7 @@ class Groups {
 			return apply_filters(
 				'wpml_translate_single_string',
 				$value,
-				'bpml',
+				self::TEXTDOMAIN,
 				'Group #' . Obj::prop( 'id', $group ) . ' ' . $field
 			);
 		};
