@@ -28,7 +28,7 @@ class Groups {
 			do_action(
 				'wpml_register_single_string',
 				self::TEXTDOMAIN,
-				'Group #' . $get( 'id' ) . ' ' . $field,
+				self::getName( $get( 'id' ), $field ),
 				$get( $field )
 			);
 		}
@@ -45,9 +45,19 @@ class Groups {
 				'wpml_translate_single_string',
 				$value,
 				self::TEXTDOMAIN,
-				'Group #' . Obj::prop( 'id', $group ) . ' ' . $field
+				self::getName( Obj::prop( 'id', $group ), $field )
 			);
 		};
+	}
+
+	/**
+	 * @param int    $id
+	 * @param string $field
+	 *
+	 * @return string
+	 */
+	public static function getName( $id, $field ) {
+		return sprintf( 'Group #%d %s', $id, $field );
 	}
 
 }
