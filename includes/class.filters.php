@@ -2,11 +2,10 @@
 /**
  * Enables BP multilingual components on frontend using various filters.
  */
-class BPML_Filters
-{
+class BPML_Filters implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
     protected $_icl_ls_languages;
 
-    public function __construct() {
+    public function add_hooks() {
         // Filter BP AJAX URL (add query args 'lang' and '_bpml_ac')
         add_filter( 'bp_core_ajax_url', array($this, 'core_ajax_url_filter') );
         // Filter language switcher
@@ -246,5 +245,3 @@ class BPML_Filters
 	}
 
 }
-
-new BPML_Filters();
