@@ -3,6 +3,7 @@
 namespace WPML\BuddyPress;
 
 use WPML\FP\Obj;
+use WPML\FP\Fns;
 
 class Groups {
 
@@ -20,12 +21,14 @@ class Groups {
 	 * @param BP_Groups_Group|array $group
 	 */
 	public function registerStrings( $group ) {
+		$get = Obj::prop( Fns::__, $group );
+
 		foreach ( self::FIELDS as $field ) {
 			do_action(
 				'wpml_register_single_string',
 				'bpml',
-				'Group #' . Obj::prop( 'id', $group ) . ' ' . $field,
-				Obj::prop( $field, $group )
+				'Group #' . $get( 'id' ) . ' ' . $field,
+				$get( $field )
 			);
 		}
 	}
