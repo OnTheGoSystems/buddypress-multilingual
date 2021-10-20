@@ -10,6 +10,15 @@
 
 define( 'BPML_VERSION', '1.6.1' );
 define( 'BPML_RELPATH', plugins_url( '', __FILE__ ) );
+define( 'BPML_PATH', __DIR__ );
+
+if ( ! class_exists( 'WPML_Core_Version_Check' ) ) {
+	require_once BPML_PATH . '/vendor/wpml-shared/wpml-lib-dependencies/src/dependencies/class-wpml-core-version-check.php';
+}
+
+if ( ! WPML_Core_Version_Check::is_ok( BPML_PATH . '/wpml-dependencies.json' ) ) {
+	return;
+}
 
 require_once "vendor/autoload.php";
 

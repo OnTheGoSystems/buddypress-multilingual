@@ -8,32 +8,31 @@ Stable tag: 1.6.1
 Requires PHP: 5.6
 License: GPLv2
 
-BuddyPress Multilingual allows BuddyPress sites to run fully multilingual using the WPML plugin.
+BuddyPress Multilingual allows BuddyPress and BuddyBoss sites to run fully multilingual using the WPML plugin.
 
 == Description ==
 
-The plugin allows building multilingual [BuddyPress](https://wordpress.org/plugins/buddypress/) sites with [WPML](http://wpml.org/). It works with single-site or multi-site BuddyPress installations. Both the main site and child blogs can run multilingual.
+The plugin allows building multilingual [BuddyPress](https://wordpress.org/plugins/buddypress/) or [BuddyBoss](https://www.buddyboss.com/) sites with [WPML](http://wpml.org/). It works with single-site or multi-site installations. Both the main site and child blogs can run multilingual.
 
 Guest blogs can choose their language and create multilingual contents. Additionally, each guest can choose the admin language individually .
 
 Requirements:
 
-* WPML 3.6.x or higher. You must enable 'languages per directories' or 'languages per domain'.
-* Tested up to BuddyPress 6.3.0
+* WPML 4.5.x or higher. You must enable 'languages per directories' or 'languages per domain'.
 
 = Features =
 
-* Adds language switching to all BuddyPress pages (Activity, Groups, Profile and Register page)
+* Adds language switching to all BuddyPress/BuddyBoss pages (Activity, Groups, Profile and Register page)
 * Allows to select the language when viewing user profiles
 * Keeps the language consistent when clicking on different links (by adding the language to links)
 * Allows to translate email notifications
-* Keeps the entire BuddyPress workflow in the current language (create group, change avatars etc.)
+* Keeps the entire BuddyPress/BuddyBoss workflow in the current language (create group, change avatars etc.)
 
 = Need Support? =
 
 Please submit support requests to **[WPML forum](http://wpml.org/forums/forum/english-support/)**. Remember to report:
 
-* The versions of BuddyPress, WPML and WordPress that you're using.
+* The versions of BuddyPress/BuddyBoss, WPML and WordPress that you're using.
 * A URL to your site, where we can see the problem happening.
 * A description of what you expect to see and what you're seeing in practice.
 
@@ -41,13 +40,13 @@ Please submit support requests to **[WPML forum](http://wpml.org/forums/forum/en
 
 1. Unzip and upload contents of buddypress-multilingual.zip file to the `/wp-content/plugins/` directory.
 2. Activate the plugin.
-3. Enable WPML and BuddyPress.
+3. Enable WPML.
 
 == Frequently Asked Questions ==
 
 = Why cannot I use language as parameter? =
 
-Support for language as parameter will not be added soon as we're looking for solutions other than filtering all kinds of BuddyPress navigation and action links.
+Support for language as parameter will not be added soon as we're looking for solutions other than filtering all kinds of navigation and action links.
 
 == Screenshots ==
 
@@ -97,9 +96,9 @@ Support for language as parameter will not be added soon as we're looking for so
 * Fixed strict standards warning for PHP 5.6
 * Fixed regex for stripping language from bp_uri
 * Fixed field tabs on profile screen
-* Fixed profile view for radio and checkboxes fields 
-* Fixed profile view for fields that have values starting with number 
-* Added ability to switch off verbose rules 
+* Fixed profile view for radio and checkboxes fields
+* Fixed profile view for fields that have values starting with number
+* Added ability to switch off verbose rules
 
 = 1.5.1 =
 * Improved WPML API usage
