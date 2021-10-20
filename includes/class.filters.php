@@ -2,8 +2,7 @@
 /**
  * Enables BP multilingual components on frontend using various filters.
  */
-class BPML_Filters
-{
+class BPML_Filters implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
     protected $_icl_ls_languages;
 
     public function add_hooks() {

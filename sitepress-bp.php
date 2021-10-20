@@ -52,10 +52,12 @@ function bpml_init() {
 			) {
 				$apply_filters = true;
 			}
+
+			$classes = [];
+
 			// Always on frontend
-			if ( !is_admin() || $apply_filters ) {
-				$filters = new BPML_Filters();
-				$filters->add_hooks();
+			if ( ! is_admin() || $apply_filters ) {
+				$classes[] = BPML_Filters::class;
 
 				// Verbose page rewrite rules
 				if ( defined( 'BPML_USE_VERBOSE_PAGE_RULES' ) && BPML_USE_VERBOSE_PAGE_RULES ) {
@@ -65,15 +67,12 @@ function bpml_init() {
 				}
 			}
 
-			// XProfile
-			$xprofile = new BPML_XProfile();
-			$xprofile->add_hooks();
+			$classes[] = BPML_XProfile::class;
+			$classes[] = BPML_Compatibility::class;
+			$classes[] = WPML\BuddyPress\Groups::class;
 
-			$bpml_compatibility = new BPML_Compatibility();
-			$bpml_compatibility->add_hooks();
-
-			$groups = new WPML\BuddyPress\Groups();
-			$groups->addHooks();
+			$loader = new WPML_Action_Filter_Loader();
+			$loader->load( $classes );
 		}
 	} else if ( is_admin() ) {
 		add_action( 'admin_notices', 'bpml_admin_notice_required_plugins' );

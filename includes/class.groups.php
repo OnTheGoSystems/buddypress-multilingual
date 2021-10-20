@@ -5,12 +5,12 @@ namespace WPML\BuddyPress;
 use WPML\FP\Obj;
 use WPML\FP\Fns;
 
-class Groups {
+class Groups implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 
 	const FIELDS     = [ 'name', 'description' ];
 	const TEXTDOMAIN = 'bpml';
 
-	public function addHooks() {
+	public function add_hooks() {
 		add_action( 'groups_group_after_save', [ $this, 'registerStrings' ] );
 
 		foreach ( self::FIELDS as $field ) {
