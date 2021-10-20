@@ -11,7 +11,7 @@ class Groups {
 	const TEXTDOMAIN = 'bpml';
 
 	public function addHooks() {
-		add_action( 'groups_group_after_save', [ $this, 'registerStrings' ], 10, 2 );
+		add_action( 'groups_group_after_save', [ $this, 'registerStrings' ] );
 
 		foreach ( self::FIELDS as $field ) {
 			add_filter( 'bp_get_group_' . $field, $this->translate( $field ), 10, 2 );
