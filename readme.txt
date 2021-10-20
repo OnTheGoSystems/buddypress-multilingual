@@ -57,6 +57,10 @@ Support for language as parameter will not be added soon as we're looking for so
 
 == Changelog ==
 
+= 1.6.2 =
+* Allow translating group names and descriptions
+* Add support for the BuddyBoss platform
+
 = 1.6.1 =
 * Added changes related to WP 5.6 and jQuery migration
 
