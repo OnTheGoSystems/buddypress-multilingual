@@ -35,9 +35,9 @@ class Groups {
 	}
 
 	/**
-	 * @param string                $field
-	 * @param string                $value
-	 * @param BP_Groups_Group|array $group
+	 * @param string $field
+	 *
+	 * @return \Closure (string, BP_Groups_Group|array) -> string
 	 */
 	public function translate( $field ) {
 		return function( $value, $group ) use ( $field ) {
