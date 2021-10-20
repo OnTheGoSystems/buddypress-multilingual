@@ -5,10 +5,10 @@
   Description: BuddyPress Multilingual. <a href="http://wpml.org/?page_id=2890">Documentation</a>.
   Author: OnTheGoSystems
   Author URI: http://www.onthegosystems.com
-  Version: 1.6.1
+  Version: 1.6.2
  */
 
-define( 'BPML_VERSION', '1.6.1' );
+define( 'BPML_VERSION', '1.6.2' );
 define( 'BPML_RELPATH', plugins_url( '', __FILE__ ) );
 define( 'BPML_PATH', __DIR__ );
 
@@ -20,12 +20,12 @@ if ( ! WPML_Core_Version_Check::is_ok( BPML_PATH . '/wpml-dependencies.json' ) )
 	return;
 }
 
-require_once "vendor/autoload.php";
+require_once BPML_PATH . '/includes/functions.php';
+require_once BPML_PATH . '/vendor/autoload.php';
 
 add_action( 'plugins_loaded', 'bpml_init', 11 );
 
 function bpml_init() {
-	require_once dirname( __FILE__ ) . '/includes/functions.php';
 	if ( ( defined( 'BP_VERSION' ) || defined( 'BP_PLATFORM_VERSION' ) ) && did_action( 'wpml_loaded' ) ) {
 		if ( bpml_is_langauge_as_param() ) {
 			add_action( 'admin_notices', 'bpml_admin_notice_wpml_settings' );
@@ -62,7 +62,7 @@ function bpml_init() {
 				$apply_filters = true;
 			}
 
-			$classes = [];
+			$classes = [ WPML\BuddyPress\Upgrade::class ];
 
 			// Always on frontend
 			if ( ! is_admin() || $apply_filters ) {
