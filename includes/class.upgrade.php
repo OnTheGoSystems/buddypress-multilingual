@@ -29,9 +29,11 @@ class Upgrade implements IWPML_Backend_Action {
 	}
 
 	public function register_group_strings() {
-		$groups = \groups_get_groups( [ 'per_page' => -1 ] );
-		foreach ( $groups['groups'] as $group ) {
-			Groups::registerStrings( $group );
+		if ( bp_is_active( 'groups' ) ) {
+			$groups = \groups_get_groups( [ 'per_page' => -1 ] );
+			foreach ( $groups['groups'] as $group ) {
+				Groups::registerStrings( $group );
+			}
 		}
 	}
 
