@@ -1,12 +1,21 @@
 {
-  "name": "otgs/buddypress-multilingual",
-  "type": "wordpress-plugin",
-  "description": "BuddyPress Multilingual allows BuddyPress sites to run fully multilingual using the WPML plugin.",
-  "homepage": "https://wordpress.org/plugins/buddypress-multilingual/",
-  "license": "GPL-2.0",
-  "autoload"    : {
-    "classmap": [
-      "includes/"
-    ]
-  }
+	"name": "otgs/buddypress-multilingual",
+	"type": "wordpress-plugin",
+	"description": "BuddyPress Multilingual allows BuddyPress and BuddyBoss sites to run fully multilingual using the WPML plugin.",
+	"homepage": "https://wordpress.org/plugins/buddypress-multilingual/",
+	"license": "GPL-2.0",
+	"repositories": {
+		"wpml-lib-dependencies": {
+			"type": "vcs",
+			"url": "ssh://git@git.onthegosystems.com:10022/wpml-shared/wpml-lib-dependencies.git"
+		}
+	},
+	"require": {
+		"wpml-shared/wpml-lib-dependencies": "~0.1"
+	},
+	"autoload": {
+		"classmap": [
+			"includes/"
+		]
+	}
 }
