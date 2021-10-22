@@ -56,7 +56,7 @@ function bpml_is_langauge_as_param() {
 
 function bpml_admin_notice_required_plugins() {
     echo '<div class="message updated"><p>'
-    . __( 'For BuddyPress Multilingual to work you must enable WPML and BuddyPress.', 'bpml' )
+    . __( 'For BuddyPress Multilingual to work you must enable WPML together with BuddyPress or BuddyBoss.', 'bpml' )
     . '</p></div>';
 }
 
