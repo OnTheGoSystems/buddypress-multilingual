@@ -11,7 +11,7 @@ class Groups implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 	const TEXTDOMAIN = 'bpml';
 
 	public function add_hooks() {
-		add_action( 'groups_group_after_save', 'Groups::registerStrings' );
+		add_action( 'groups_group_after_save', [ $this, 'registerStrings' ] );
 
 		foreach ( self::FIELDS as $field ) {
 			add_filter( 'bp_get_group_' . $field, $this->translate( $field ), 10, 2 );
@@ -21,7 +21,7 @@ class Groups implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 	/**
 	 * @param BP_Groups_Group|array $group
 	 */
-	public static function registerStrings( $group ) {
+	public function registerStrings( $group ) {
 		$get = Obj::prop( Fns::__, $group );
 
 		foreach ( self::FIELDS as $field ) {

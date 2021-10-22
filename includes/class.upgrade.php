@@ -2,9 +2,7 @@
 
 namespace WPML\BuddyPress;
 
-use IWPML_Backend_Action;
-
-class Upgrade implements IWPML_Backend_Action {
+class Upgrade implements \IWPML_Backend_Action {
 
 	const VERSION_KEY = 'bpml_version';
 
@@ -32,7 +30,7 @@ class Upgrade implements IWPML_Backend_Action {
 		if ( bp_is_active( 'groups' ) ) {
 			$groups = \groups_get_groups( [ 'per_page' => -1 ] );
 			foreach ( $groups['groups'] as $group ) {
-				Groups::registerStrings( $group );
+				do_action_ref_array( 'groups_group_after_save', array( $group ) );
 			}
 		}
 	}
