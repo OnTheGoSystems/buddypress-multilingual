@@ -1,6 +1,6 @@
 <?php
 
-class BPML_Compatibility {
+class BPML_Compatibility implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 
 	public function add_hooks() {
 		add_action( 'bp_init', array( $this, 'buddydrive' ), 5 );

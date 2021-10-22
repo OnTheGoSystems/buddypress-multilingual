@@ -2,12 +2,11 @@
 /**
  * Translates group and profile field labels.
  */
-class BPML_XProfile
-{
+class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 
     protected $_context = 'Buddypress Multilingual', $_field_string_prefix = 'profile field ', $_group_string_prefix = 'profile group ';
 
-    public function __construct() {
+    public function add_hooks() {
 
         add_action( 'bp_init', array($this, 'bp_init') );
 
@@ -348,5 +347,3 @@ class BPML_XProfile
     }
 
 }
-
-new BPML_XProfile();
