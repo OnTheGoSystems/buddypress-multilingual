@@ -1,0 +1,60 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "2b95321742436e85c02716701f873c66",
+    "packages": [
+        {
+            "name": "wpml-shared/wpml-lib-dependencies",
+            "version": "0.1.6",
+            "source": {
+                "type": "git",
+                "url": "ssh://git@git.onthegosystems.com:10022/wpml-shared/wpml-lib-dependencies.git",
+                "reference": "723824a61bfec7dd535afcd7260fad50d8bfe6e8"
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "antecedent/patchwork": "^2.0.10",
+                "composer/composer": "~1.9",
+                "otgs/unit-tests-framework": "~1.2.5",
+                "roave/security-advisories": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Andrea Sciamanna",
+                    "email": "andrea.s@onthegosystems.com",
+                    "homepage": "https://wpml.org"
+                }
+            ],
+            "description": "WPML Dependencies Library",
+            "homepage": "https://git.onthegosystems.com/wpml-shared/wpml-lib-cache",
+            "keywords": [
+                "dependencies",
+                "wpml"
+            ],
+            "time": "2020-03-17T13:15:33+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
+}
