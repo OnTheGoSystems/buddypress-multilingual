@@ -149,7 +149,7 @@ class BPML_Filters implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
                             do_action( 'wpml_switch_language', $code );
                             $page_permalink = untrailingslashit( get_permalink( $translated_page_id ) );
                             do_action( 'wpml_switch_language', $current_language );
-                            $language['url'] = "{$page_permalink}/{$append}";
+                            $language['url'] = user_trailingslashit( "{$page_permalink}/{$append}" );
                         }
 
                         if ( $add_get_parameters ) {
