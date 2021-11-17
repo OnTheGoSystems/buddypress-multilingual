@@ -4,7 +4,9 @@
  */
 class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 
-    protected $_context = 'Buddypress Multilingual', $_field_string_prefix = 'profile field ', $_group_string_prefix = 'profile group ';
+    protected $_context = \WPML\BuddyPress\Groups::TEXTDOMAIN;
+    protected $_field_string_prefix = 'profile field ';
+    protected $_group_string_prefix = 'profile group ';
 
     public function add_hooks() {
 
@@ -29,6 +31,7 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
         add_filter( 'bp_get_the_profile_field_options_select', array($this, 't_select_option'), 0, 5 );
         add_filter( 'bp_get_the_profile_field_value', array($this, 't_value_profile_view'), 9, 2 );
         add_filter( 'bp_get_the_profile_group_name', array($this, 't_group_name') );
+        add_filter( 'bp_get_member_profile_data', array($this, 't_data'), 10, 2 );
     }
 
     public function bp_init() {
@@ -290,6 +293,31 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
         
         return $group_id ? apply_filters( 'wpml_translate_single_string', $group_name, $this->_context,
                 "{$this->_group_string_prefix}{$group_id} name" ) : $group_name;
+    }
+
+    /**
+     * Translates radio/checkbox values in member profile data.
+     *
+     * @param array $data
+     * @param array $args
+     *
+     * @return array
+     */
+    public function t_data( $data, $args ) {
+        $field_id = xprofile_get_field_id_from_name( $args['field'] );
+        if ( $field_id ) {
+            $field_type = bp_xprofile_get_field_type( $field_id );
+            if ( $field_type && in_array( $field_type->field_obj->type, array( 'radio', 'checkbox', 'selectbox', 'multiselectbox' ) ) ) {
+                $data = stripslashes( apply_filters(
+                    'wpml_translate_single_string',
+                    $data,
+                    $this->_context,
+                    $this->sanitize_option_basename( (object) [ 'name' => $data ], $field_id ) . ' name'
+                ) );
+            }
+        }
+
+        return $data;
     }
 
     public function sanitize_option_basename( $option, $field_id ) {

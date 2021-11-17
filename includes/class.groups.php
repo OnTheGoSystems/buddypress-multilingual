@@ -8,7 +8,7 @@ use WPML\FP\Fns;
 class Groups implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 
 	const FIELDS     = [ 'name', 'description' ];
-	const TEXTDOMAIN = 'bpml';
+	const TEXTDOMAIN = 'Buddypress Multilingual';
 
 	public function add_hooks() {
 		add_action( 'groups_group_after_save', [ $this, 'registerStrings' ] );
