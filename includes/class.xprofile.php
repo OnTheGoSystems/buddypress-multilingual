@@ -20,9 +20,13 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
         add_action( 'xprofile_fields_deleted_field', array( $this, 'deleted_field_action' ) );
         add_action( 'xprofile_groups_saved_group', array( $this, 'saved_group_action' ) );
         add_action( 'xprofile_groups_deleted_group', array( $this, 'deleted_group_action' ) );
+        add_action( 'update_xprofile_field_meta', array( $this, 'update_alternate_name' ), 10, 4 );
+        add_action( 'add_xprofile_field_meta', array( $this, 'add_alternate_name' ), 10, 3 );
+        add_action( 'delete_xprofile_field_meta', array( $this, 'delete_alternate_name' ), 10, 3 );
 
         // Translation filters
-        add_filter( 'bp_get_the_profile_field_name', array($this, 't_name') );
+        add_filter( 'bp_get_the_profile_field_name', array($this, 't_name'), 9 ); // Must run before name is replaced with alternate_name.
+        add_filter( 'bp_get_the_profile_field_alternate_name', array($this, 't_alternate_name') );
         add_filter( 'bp_get_the_profile_field_description', array($this, 't_description') );
         add_filter( 'bp_xprofile_field_get_children', array($this, 't_options') );
         add_filter( 'bp_get_the_profile_field_options_checkbox', array($this, 't_checkbox'), 0, 5 );
@@ -52,12 +56,16 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
                 if ( !empty( $group->fields ) && is_array( $group->fields ) ) {
                     foreach ( $group->fields as $field ) {
                         $this->saved_field_action( $field );
+                        $meta = bp_xprofile_get_meta( $field->id, 'field', 'alternate_name', true );
+                        if ( ! empty( $meta ) ) {
+                            $this->add_alternate_name( $field->id, 'alternate_name', $meta );
+                        }
                     }
                 }
             }
         }
     }
-    
+
     public function saved_field_action( $field ) {
         // Happens that new field has no accesible 'id' property
         if ( empty( $field->id ) ) {
@@ -156,9 +164,51 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 	    }
     }
 
+    /**
+     * @param int    $meta_id
+     * @param int    $field_id
+     * @param string $key
+     * @param string $value
+     */
+    public function update_alternate_name( $meta_id, $field_id, $key, $value ) {
+        $this->add_alternate_name( $field_id, $key, $value );
+    }
+
+    /**
+     * @param int    $field_id
+     * @param string $key
+     * @param string $value
+     */
+    public function add_alternate_name( $field_id, $key, $value ) {
+        if ( 'alternate_name' === $key && ! empty( $value ) ) {
+	        do_action( 'wpml_register_single_string', $this->_context,
+                    "{$this->_field_string_prefix}{$field_id} alternate name", stripslashes( $value ) );
+        }
+    }
+
+    /**
+     * @param array $meta_ids
+     * @param int   $field_id
+     * @param string $key
+     * @param string $value
+     */
+    public function delete_alternate_name( $meta_ids, $field_id, $key ) {
+	    if ( function_exists( 'icl_unregister_string' ) ) {
+		    if ( 'alternate_name' === $key ) {
+			    icl_unregister_string( $this->_context,
+				    "{$this->_field_string_prefix}{$field_id} alternate name" );
+		    }
+	    }
+    }
+
     public function t_name( $name ) {
         global $field;
         return stripslashes( apply_filters( 'wpml_translate_single_string', $name, $this->_context, "{$this->_field_string_prefix}{$field->id} name" ) );
+    }
+
+    public function t_alternate_name( $name ) {
+        global $field;
+        return stripslashes( apply_filters( 'wpml_translate_single_string', $name, $this->_context, "{$this->_field_string_prefix}{$field->id} alternate name" ) );
     }
 
     public function t_description( $description ) {
@@ -347,6 +397,14 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
                             "{$this->_field_string_prefix}{$field->id} name" );
                         if ( !$is_registered ) {
                             return true;
+                        }
+                        $meta = bp_xprofile_get_meta( $field->id, 'field', 'alternate_name', true );
+                        if ( ! empty( $meta ) ) {
+                            $is_registered = icl_st_is_registered_string( $this->_context,
+                                "{$this->_field_string_prefix}{$field->id} alternate name" );
+                            if ( ! $is_registered ) {
+                                return true;
+                            }
                         }
                     }
                 }
