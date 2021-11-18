@@ -401,7 +401,7 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
                             return true;
                         }
                         $meta = bp_xprofile_get_meta( $field->id, 'field', 'alternate_name', true );
-                        if ( ! empty( $meta ) ) {
+                        if ( $meta ) {
                             $is_registered = icl_st_is_registered_string( $this->_context,
                                 "{$this->_field_string_prefix}{$field->id} alternate name" );
                             if ( ! $is_registered ) {
