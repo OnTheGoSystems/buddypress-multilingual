@@ -59,7 +59,7 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
                     foreach ( $group->fields as $field ) {
                         $this->saved_field_action( $field );
                         $meta = bp_xprofile_get_meta( $field->id, 'field', 'alternate_name', true );
-                        if ( ! empty( $meta ) ) {
+                        if ( $meta ) {
                             $this->add_alternate_name( $field->id, 'alternate_name', $meta );
                         }
                     }
