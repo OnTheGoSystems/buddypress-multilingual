@@ -4,7 +4,9 @@
  */
 class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 
-    protected $_context = 'Buddypress Multilingual', $_field_string_prefix = 'profile field ', $_group_string_prefix = 'profile group ';
+    protected $_context = \WPML\BuddyPress\Groups::TEXTDOMAIN;
+    protected $_field_string_prefix = 'profile field ';
+    protected $_group_string_prefix = 'profile group ';
 
     public function add_hooks() {
 
