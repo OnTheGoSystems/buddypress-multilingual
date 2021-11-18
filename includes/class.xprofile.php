@@ -8,6 +8,8 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
     protected $_field_string_prefix = 'profile field ';
     protected $_group_string_prefix = 'profile group ';
 
+    const PRIORITY_BEFORE_NAME_REPLACE = 9;
+
     public function add_hooks() {
 
         add_action( 'bp_init', array($this, 'bp_init') );
@@ -25,7 +27,7 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
         add_action( 'delete_xprofile_field_meta', array( $this, 'delete_alternate_name' ), 10, 3 );
 
         // Translation filters
-        add_filter( 'bp_get_the_profile_field_name', array($this, 't_name'), 9 ); // Must run before name is replaced with alternate_name.
+        add_filter( 'bp_get_the_profile_field_name', array($this, 't_name'), self::PRIORITY_BEFORE_NAME_REPLACE );
         add_filter( 'bp_get_the_profile_field_alternate_name', array($this, 't_alternate_name') );
         add_filter( 'bp_get_the_profile_field_description', array($this, 't_description') );
         add_filter( 'bp_xprofile_field_get_children', array($this, 't_options') );
