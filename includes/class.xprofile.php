@@ -293,8 +293,16 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
                 "{$this->_group_string_prefix}{$group_id} name" ) : $group_name;
     }
 
-    public function t_data( $data, $r ) {
-        $field_id = xprofile_get_field_id_from_name( $r['field'] );
+    /**
+     * Translates radio/checkbox values in member profile data.
+     *
+     * @param array $data
+     * @param array $args
+     *
+     * @return array
+     */
+    public function t_data( $data, $args ) {
+        $field_id = xprofile_get_field_id_from_name( $args['field'] );
         if ( $field_id ) {
             $field_type = bp_xprofile_get_field_type( $field_id );
             if ( in_array( $field_type->field_obj->type, array( 'radio', 'checkbox', 'selectbox', 'multiselectbox' ) ) ) {
