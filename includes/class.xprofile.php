@@ -305,7 +305,7 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
         $field_id = xprofile_get_field_id_from_name( $args['field'] );
         if ( $field_id ) {
             $field_type = bp_xprofile_get_field_type( $field_id );
-            if ( in_array( $field_type->field_obj->type, array( 'radio', 'checkbox', 'selectbox', 'multiselectbox' ) ) ) {
+            if ( $field_type && in_array( $field_type->field_obj->type, array( 'radio', 'checkbox', 'selectbox', 'multiselectbox' ) ) ) {
                 $data = stripslashes( apply_filters(
                     'wpml_translate_single_string',
                     $data,
