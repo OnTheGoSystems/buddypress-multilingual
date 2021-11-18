@@ -182,7 +182,7 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
      * @param string $value
      */
     public function add_alternate_name( $field_id, $key, $value ) {
-        if ( 'alternate_name' === $key && ! empty( $value ) ) {
+        if ( 'alternate_name' === $key && $value ) {
 	        do_action( 'wpml_register_single_string', $this->_context,
                     "{$this->_field_string_prefix}{$field_id} alternate name", stripslashes( $value ) );
         }
