@@ -9,6 +9,7 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
     protected $_group_string_prefix = 'profile group ';
 
     const PRIORITY_BEFORE_NAME_REPLACE = 9;
+    const FIELD_TYPES_WITH_OPTIONS     = [ 'radio', 'checkbox', 'selectbox', 'multiselectbox' ];
 
     public function add_hooks() {
 
@@ -88,7 +89,7 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
                     "{$this->_field_string_prefix}{$field->id} description", stripslashes( $field->description ) );
         }
         // Register options
-        if ( in_array( $field->type, array('radio', 'checkbox', 'selectbox', 'multiselectbox') ) ) {
+        if ( in_array( $field->type, self::FIELD_TYPES_WITH_OPTIONS ) ) {
             $bp_field = xprofile_get_field( $field->id );
             $options = $bp_field->get_children();
             foreach ( $options as $option ) {
@@ -119,7 +120,7 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 				    "{$this->_field_string_prefix}{$field->id} description", $field->description );
 		    }
 		    // Unregister options
-		    if ( in_array( $field->type, array( 'radio', 'checkbox', 'selectbox', 'multiselectbox' ) ) ) {
+		    if ( in_array( $field->type, self::FIELD_TYPES_WITH_OPTIONS ) ) {
 			    $bp_field = xprofile_get_field( $field->id );
 			    $options  = $bp_field->get_children();
 			    foreach ( $options as $option ) {
@@ -275,12 +276,7 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
         global $field;
 
         // Only for fields with options
-        if ( in_array( $field_type,
-                        array(
-                    'radio',
-                    'checkbox',
-                    'selectbox',
-                    'multiselectbox') ) ) {
+        if ( in_array( $field_type, self::FIELD_TYPES_WITH_OPTIONS ) ) {
             $bp_field = xprofile_get_field( $field->id );
             $options = $bp_field->get_children();
             switch ( $field_type ) {
@@ -359,7 +355,7 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
         $field_id = xprofile_get_field_id_from_name( $args['field'] );
         if ( $field_id ) {
             $field_type = bp_xprofile_get_field_type( $field_id );
-            if ( $field_type && in_array( $field_type->field_obj->type, array( 'radio', 'checkbox', 'selectbox', 'multiselectbox' ) ) ) {
+            if ( $field_type && in_array( $field_type->field_obj->type, self::FIELD_TYPES_WITH_OPTIONS ) ) {
                 $data = stripslashes( apply_filters(
                     'wpml_translate_single_string',
                     $data,
