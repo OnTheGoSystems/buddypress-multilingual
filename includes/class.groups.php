@@ -16,6 +16,9 @@ class Groups implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 		foreach ( self::FIELDS as $field ) {
 			add_filter( 'bp_get_group_' . $field, $this->translate( $field ), 10, 2 );
 		}
+
+		add_filter( 'bp_get_group_description_excerpt', [ $this, 'translateExcerpt' ], 10, 2 );
+		add_filter( 'bp_nouveau_get_group_description_excerpt', [ $this, 'translateExcerpt' ], 10, 2 );
 	}
 
 	/**
@@ -58,6 +61,18 @@ class Groups implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
 	 */
 	public static function getName( $id, $field ) {
 		return sprintf( 'Group #%d %s', $id, $field );
+	}
+
+	/**
+	 * @param string $excerpt
+	 * @param object $group
+	 *
+	 * @return string
+	 */
+	public function translateExcerpt( $excerpt, $group ) {
+		$getTranslation = $this->translate( 'description' );
+
+		return bp_create_excerpt( $getTranslation( $excerpt, $group ), strlen( $excerpt ) );
 	}
 
 }
