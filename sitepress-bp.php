@@ -12,15 +12,17 @@ define( 'BPML_VERSION', '1.6.2' );
 define( 'BPML_RELPATH', plugins_url( '', __FILE__ ) );
 define( 'BPML_PATH', __DIR__ );
 
+require_once BPML_PATH . '/includes/functions.php';
+
 if ( ! class_exists( 'WPML_Core_Version_Check' ) ) {
 	require_once BPML_PATH . '/vendor/wpml-shared/wpml-lib-dependencies/src/dependencies/class-wpml-core-version-check.php';
 }
 
 if ( ! WPML_Core_Version_Check::is_ok( BPML_PATH . '/wpml-dependencies.json' ) ) {
+	add_action( 'admin_notices', 'bpml_admin_notice_required_plugins' );
 	return;
 }
 
-require_once BPML_PATH . '/includes/functions.php';
 require_once BPML_PATH . '/vendor/autoload.php';
 
 add_action( 'plugins_loaded', 'bpml_init', 11 );
