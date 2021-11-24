@@ -408,8 +408,8 @@ class BPML_XProfile implements \IWPML_Backend_Action, \IWPML_Frontend_Action {
     public function translate_data( $data, $args ) {
         $field_id = xprofile_get_field_id_from_name( $args['field'] );
         if ( $field_id ) {
-            $field_type = bp_xprofile_get_field_type( $field_id );
-            if ( $field_type && in_array( $field_type->field_obj->type, self::FIELD_TYPES_WITH_OPTIONS ) ) {
+            $field = xprofile_get_field( $field_id, null, false );
+            if ( $field && in_array( $field->type_obj->field_obj->type, self::FIELD_TYPES_WITH_OPTIONS ) ) {
                 $data = $this->translate_option_name( (object) [ 'name' => $data ], $field_id );
             }
         }
