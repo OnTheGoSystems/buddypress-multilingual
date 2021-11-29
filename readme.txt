@@ -57,9 +57,11 @@ Support for language as parameter will not be added soon as we're looking for so
 
 == Changelog ==
 
-= 1.6.2 =
-* Allow translating group names and descriptions
-* Add support for the BuddyBoss platform
+= 1.7.0 =
+* Add support for the BuddyBoss platform.
+* Handle translation of alternate_name in profile fields (BuddyBoss only).
+* Allow translating group names and descriptions using String Translation.
+* Translate strings displayed using bp_get_member_profile_data().
 
 = 1.6.1 =
 * Added changes related to WP 5.6 and jQuery migration
